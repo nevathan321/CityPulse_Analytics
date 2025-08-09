@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toronto 311 Dashboard - Interactive Analytics & ML Forecast</title>
+    <link rel="stylesheet" href="main.css">
+    
+    <meta name="description" content="Interactive dashboard for Toronto 311 service requests with ML-powered forecasting">
+    <meta name="keywords" content="Toronto, 311, dashboard, analytics, machine learning, forecast">
+</head>
+<body>
+
+<div class= "dashboard-container">
+    <header class = "dashboard-header">
+        <div class = "header-content">
+            <h1 class = "dashboard-title">
+                <span class = "city-name"> Toronto </span> 
+                <span class = "service-type"> 311 Service Dashboard</span>
+            </h1>
+            <p class="dashboard-subtitle"> Real-time analytics and ML-powered forecasting for city service requests </p>
+            <p class="dashboard-subtitle"> Nevathan Arasanchandrasegara|Aspring Data Scientist</p>
+            <div class="data-status">
+                <span class = "status-indicator" id ="datastatus">Loading...</span>
+                <span class = "last-updated" id="LastUpdated">Last updated: --</span>
+            </div>
+        </div>
+    </header> 
+
+    <main class="dashboard-main">
+        <section class="kpi-section">
+                <h2 class="section-title">Key Metrics Overview</h2>
+                <div class="kpi-grid">
+                    <div class="kpi-card" id="totalRequests">
+                        <div class="kpi-value">--</div>
+                        <div class="kpi-label">Total Service Requests</div>
+                    </div>
+                    <div class="kpi-card" id="completionRate">
+                        <div class="kpi-value">--%</div>
+                        <div class="kpi-label">Completion Rate</div>
+                    </div>
+                    <div class="kpi-card" id="topWard">
+                        <div class="kpi-value">--</div>
+                        <div class="kpi-label">Most Active Ward</div>
+                    </div>
+                    <div class="kpi-card" id="topServiceType">
+                        <div class="kpi-value">--</div>
+                        <div class="kpi-label">Top Service Type</div>
+                    </div>
+                </div>
+         </section>
+
+         <section class="charts-section">
+                <h2 class="section-title">Analytics & Trends</h2>
+                <div class="charts-grid">
+                    <div class="chart-column">
+                        <div class="chart-container">
+                            <h3 class="chart-title">Daily Service Requests Over Time</h3>
+                            <p class="chart-description">Historical daily request counts and trends</p>
+                            <div id="timeSeriesChart" class="chart-plot"></div>
+                        </div>
+                        <div class="chart-container">
+                            <h3 class="chart-title">Requests by Ward</h3>
+                            <p class="chart-description">Service request distribution across Toronto wards</p>
+                            <div id="wardChart" class="chart-plot"></div>
+                        </div>
+                        <div class="chart-container">
+                            <h3 class="chart-title">Request Status Distribution</h3>
+                            <p class="chart-description">Completed vs Cancelled vs Unknown requests</p>
+                            <div id="statusChart" class="chart-plot"></div>
+                        </div>
+                    </div>
+                    <div class="chart-column">
+                        <div class="chart-container">
+                            <h3 class="chart-title">Top Service Request Types</h3>
+                            <p class="chart-description">Most common types of 311 service requests</p>
+                            <div id="serviceTypesChart" class="chart-plot"></div>
+                        </div>
+                        <div class="chart-container">
+                            <h3 class="chart-title">Requests by Division</h3>
+                            <p class="chart-description">Workload distribution across city divisions</p>
+                            <div id="divisionChart" class="chart-plot"></div>
+                        </div>
+                        <div class="chart-container">
+                            <h3 class="chart-title">Request Patterns by Hour</h3>
+                            <p class="chart-description">Peak hours for service requests</p>
+                            <div id="hourlyPatternChart" class="chart-plot"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="ml-prediction-section">
+                <h2 class="section-title"> ML Completion Predictor</h2>
+                <p class="section-description">Use machine learning to predict whether a service request will be completed based on its characteristics</p>
+                <div class="ml-container">
+                    <div class="ml-overview">
+                        <h3 class="ml-subtitle">Model Performance</h3>
+                        <div class="ml-stats-grid">
+                            <div class="ml-stat-card">
+                                <div class="ml-stat-value" id="mlAccuracy">--%</div>
+                                <div class="ml-stat-label">Accuracy</div>
+                            </div>
+                            <div class="ml-stat-card">
+                                <div class="ml-stat-value" id="mlPrecision">--%</div>
+                                <div class="ml-stat-label">Precision</div>
+                            </div>
+                            <div class="ml-stat-card">
+                                <div class="ml-stat-value" id="mlRecall">--%</div>
+                                <div class="ml-stat-label">Recall</div>
+                            </div>
+                            <div class="ml-stat-card">
+                                <div class="ml-stat-value" id="mlF1Score">--</div>
+                                <div class="ml-stat-label">F1-Score</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="prediction-tool">
+                        <div class="prediction-input-section">
+                            <h3 class="ml-subtitle">Predict Request Completion</h3>
+                            <p class="prediction-instructions">Enter service request details to predict completion likelihood</p>
+                            <div class="prediction-form">
+                                <div class="form-row">
+                                    <div class="control-group">
+                                        <label for="serviceType">Service Request Type:</label>
+                                        <input list="serviceTypeList" id="serviceType" class="control-input" placeholder="Type to search…">
+                                        <datalist id="serviceTypeList"></datalist>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="ward">Ward:</label>
+                                        <input list="wardList" id="ward" class="control-input" placeholder="Type to search…">
+                                        <datalist id="wardList"></datalist>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="control-group">
+                                        <label for="division">Division:</label>
+                                        <input list="divisionList" id="division" class="control-input" placeholder="Type to search…">
+                                        <datalist id="divisionList"></datalist>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="predPostalCode">Postal Code (First 3):</label>
+                                        <input type="text" id="predPostalCode" class="control-input" placeholder="e.g., M5V" maxlength="3">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="control-group">
+                                        <label for="predTimeOfDay">Time of Day:</label>
+                                        <select id="predTimeOfDay" class="control-input">
+                                            <option value="">Select Time</option>
+                                            <option value="morning">Morning (6AM-12PM)</option>
+                                            <option value="afternoon">Afternoon (12PM-6PM)</option>
+                                            <option value="evening">Evening (6PM-12AM)</option>
+                                            <option value="night">Night (12AM-6AM)</option>
+                                        </select>
+                                    </div>
+                                    <div class="control-group">
+                                        <label for="predDayOfWeek">Day of Week:</label>
+                                        <select id="predDayOfWeek" class="control-input">
+                                            <option value="">Select Day</option>
+                                            <option value="monday">Monday</option>
+                                            <option value="tuesday">Tuesday</option>
+                                            <option value="wednesday">Wednesday</option>
+                                            <option value="thursday">Thursday</option>
+                                            <option value="friday">Friday</option>
+                                            <option value="saturday">Saturday</option>
+                                            <option value="sunday">Sunday</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="prediction-button-container">
+                                    <button id="predictButton" class="predict-btn"> Predict Completion</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="prediction-results-section">
+                            <h3 class="ml-subtitle">Prediction Results</h3>
+                            <div id="predictionResults" class="prediction-results hidden">
+                                <div class="probability-display">
+                                    <div class="probability-gauge">
+                                        <div class="gauge-container">
+                                            <div class="gauge-fill" id="probabilityGauge"></div>
+                                            <div class="gauge-text">
+                                                <span class="probability-percent" id="probabilityPercent">--%</span>
+                                                <span class="probability-label">Completion Probability</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="prediction-details">
+                                    <div class="prediction-outcome" id="predictionOutcome">
+                                        <span class="outcome-label">Prediction:</span>
+                                        <span class="outcome-value" id="outcomeValue">--</span>
+                                    </div>
+                                    <div class="confidence-level">
+                                        <span class="confidence-label">Model Confidence:</span>
+                                        <span class="confidence-value" id="confidenceValue">--</span>
+                                    </div>
+                                    <div class="key-factors">
+                                        <h4>Key Influencing Factors:</h4>
+                                        <ul id="influencingFactors"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="predictionPlaceholder" class="prediction-placeholder">
+                                <p>Fill in the request details above and click "Predict Completion" to see the ML model's prediction.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ml-insights">
+                        <h3 class="ml-subtitle">Model Insights</h3>
+                        <div class="insights-grid">
+                            <div class="insight-chart">
+                                <h4>Feature Importance</h4>
+                                <p>Which factors most influence completion predictions</p>
+                                <div id="featureImportanceChart" class="chart-plot"></div>
+                            </div>
+                            <div class="completion-factors">
+                                <h4>Completion Success Factors</h4>
+                                <div class="factors-list">
+                                    <div class="factor-item">
+                                        <span class="factor-label">Strongest Service:</span>
+                                        <span class="factor-value" id="bestServiceType">--</span>
+                                    </div>
+                                    <div class="factor-item">
+                                        <span class="factor-label">Best Performing Ward (Might change):</span>
+                                        <span class="factor-value" id="bestWard">--</span>
+                                    </div>
+                                    <div class="factor-item">
+                                        <span class="factor-label">Most Efficient request (Might change):</span>
+                                        <span class="factor-value" id="bestrequest">--</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="dashboard-footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Data Sources</h4>
+                    <p>Toronto Open Data Portal - 311 Service Requests</p>
+                    <p>Real-time data from City of Toronto systems</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Technology Stack</h4>
+                    <p>Frontend: HTML, CSS, JavaScript, Plotly.js</p>
+                    <p>Backend: Python Flask, Pandas, Scikit-learn</p>
+                    <p>ML: Undecided </p>
+                </div>
+                <div class="footer-section">
+                    <h4>Project Info</h4>
+                    <p> Presented at Spurhacks - Interactive 311 Dashboard</p>
+                    <p> End-to-end pipeline: CSV → EDA → ML → Dashboard</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    
+    <!-- Cover errors --> 
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Loading Toronto 311 data...</p>
+    </div>
+
+    <div id="errorModal" class="error-modal hidden">
+        <div class="error-content">
+            <h3>Prediction Error</h3>
+            <p id="errorMessage">Unable to generate prediction. Please check your inputs and try again.</p>
+            <button id="closeError" class="error-close-btn">Close</button>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
+
+
+
+

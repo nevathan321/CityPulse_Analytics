@@ -1,0 +1,697 @@
+:root {
+  --bg-dark: #071421;
+  --bg-card: #2f3640;
+  --bg-hover: #1a293f;    
+  --black: #000000;
+  --black-light: #222222;
+  --text-white: #ffffff;
+  --text-gray: #94a3b8;
+  --text-muted: #64748b;
+  --border: #2a3f5a;      
+  --success: #10b981;
+  --error: #ef4444;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background: var(--bg-dark);
+  color: var(--text-white);
+  line-height: 1.6;
+}
+
+
+.dashboard-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+
+.dashboard-header {
+  background: linear-gradient(135deg, var(--black) 0%, var(--black-light) 100%);
+  border-radius: 16px;
+  padding: 48px;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.dashboard-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.dashboard-subtitle {
+  font-size: 18px;
+  opacity: 0.9;
+  margin-bottom: 24px;
+}
+
+.data-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+
+.dashboard-main {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.section-description {
+  color: var(--text-gray);
+  margin-bottom: 24px;
+}
+
+
+.kpi-section,
+.controls-section,
+.charts-section,
+.tables-section,
+.ml-prediction-section {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 32px;
+  border: 1px solid var(--border);
+}
+
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  align-items: stretch; 
+}
+
+.kpi-card {
+  background: var(--bg-hover);
+  border-radius: 12px;
+  padding: 32px;
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--black);
+  transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  min-height: 120px; 
+}
+
+.kpi-card:hover {
+  transform: translateY(-2px);
+}
+
+.kpi-value {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--black);
+}
+
+.kpi-label {
+  color: var(--text-gray);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  gap: 32px;
+  align-items: start; 
+}
+
+.chart-column {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.chart-container {
+  background: var(--bg-hover);
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  height: fit-content; 
+}
+
+.chart-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-white);
+}
+
+.chart-description {
+  font-size: 14px;
+  color: var(--text-gray);
+  margin-bottom: 24px;
+}
+
+
+.chart-plot {
+  min-height: 300px;
+  max-height: 300px; 
+  background: var(--bg-dark);
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  display: block; 
+  width: 100%;
+  overflow: hidden; 
+  position: relative; 
+}
+
+
+.chart-plot .plotly-graph-div {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+
+.chart-plot .modebar {
+  display: none !important;
+}
+
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.control-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-gray);
+}
+
+.control-select,
+.control-input {
+  background: var(--bg-dark);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px;
+  color: var(--text-white);
+  font-size: 16px;
+  width: 100%;
+}
+
+.control-select:focus,
+.control-input:focus {
+  outline: none;
+  border-color: var(--black);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+
+.ml-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.ml-subtitle {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+
+.ml-overview {
+  background: var(--bg-hover);
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid var(--border);
+}
+
+.ml-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 24px;
+}
+
+.ml-stat-card {
+  background: var(--bg-dark);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100px;
+}
+
+.ml-stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 8px;
+}
+
+.ml-stat-label {
+  font-size: 14px;
+  color: var(--text-gray);
+}
+
+
+.prediction-tool {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.prediction-input-section,
+.prediction-results-section {
+  background: var(--bg-hover);
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  height: fit-content;
+}
+
+.prediction-instructions {
+  color: var(--text-gray);
+  margin-bottom: 24px;
+}
+
+.prediction-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: end; 
+}
+
+.prediction-button-container {
+  text-align: center;
+  margin-top: 24px;
+}
+
+.predict-btn {
+  background: var(--black);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 16px 32px;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.predict-btn:hover:not(:disabled) {
+  background: var(--black-light);
+}
+
+.predict-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+.probability-display {
+  margin-bottom: 24px;
+}
+
+.gauge-container {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 24px;
+  border-radius: 50%;
+  background: conic-gradient(var(--black) 0deg, var(--black-light) 180deg, var(--border) 180deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.gauge-container::before {
+  content: "";
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: var(--bg-dark);
+}
+
+.gauge-text {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.probability-percent {
+  display: block;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.probability-label {
+  font-size: 14px;
+  color: var(--text-gray);
+}
+
+.prediction-details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.prediction-outcome,
+.confidence-level {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: var(--bg-dark);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.outcome-label,
+.confidence-label {
+  color: var(--text-gray);
+}
+
+.outcome-value,
+.confidence-value {
+  font-weight: 600;
+}
+
+.key-factors ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.key-factors li {
+  padding: 8px 12px;
+  background: var(--bg-dark);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  color: var(--text-gray);
+}
+
+.prediction-placeholder {
+  text-align: center;
+  padding: 48px;
+  color: var(--text-muted);
+}
+
+
+.ml-insights {
+  background: var(--bg-hover);
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid var(--border);
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.insight-chart,
+.completion-factors {
+  background: var(--bg-dark);
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid var(--border);
+}
+
+.factors-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.factor-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: var(--bg-hover);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.factor-label {
+  color: var(--text-gray);
+  font-size: 14px;
+}
+
+.factor-value {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+
+.dashboard-footer {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 32px;
+  margin-top: 32px;
+  border: 1px solid var(--border);
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 32px;
+}
+
+.footer-section h4 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.footer-section p {
+  color: var(--text-gray);
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 15, 35, 0.9);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.loading-overlay.active {
+  display: flex;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--border);
+  border-top: 4px solid var(--black);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 24px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.error-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 15, 35, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+}
+
+/* Used to make the error model invisiable when not needed and show when needed */
+.error-modal.hidden {
+  display: none;
+}
+
+.error-content {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 500px;
+  width: 90%;
+  border: 1px solid var(--border);
+}
+
+.error-content h3 {
+  color: var(--error);
+  font-size: 20px;
+  margin-bottom: 24px;
+}
+
+.error-content p {
+  color: var(--text-gray);
+  margin-bottom: 32px;
+}
+
+.error-close-btn {
+  background: var(--error);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+/* Flexability on various devices */ 
+
+@media (max-width: 1200px) {
+  .charts-grid,
+  .prediction-tool,
+  .insights-grid {
+    grid-template-columns: 1fr; 
+  }
+
+  .chart-column {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 16px;
+  }
+
+  .dashboard-header {
+    padding: 32px 24px;
+  }
+
+  .dashboard-title {
+    font-size: 28px;
+  }
+
+  .kpi-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .kpi-card {
+    padding: 24px;
+    min-height: 100px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .data-status {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .charts-section,
+  .ml-prediction-section {
+    padding: 24px;
+  }
+
+  .chart-plot {
+    min-height: 250px; 
+    max-height: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-container {
+    padding: 12px;
+  }
+
+  .kpi-value {
+    font-size: 24px;
+  }
+
+  .chart-title {
+    font-size: 16px;
+  }
+
+  .ml-stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .gauge-container {
+    width: 150px;
+    height: 150px;
+  }
+
+  .gauge-container::before {
+    width: 120px;
+    height: 120px;
+  }
+
+  .probability-percent {
+    font-size: 24px;
+  }
+
+  .chart-plot {
+    min-height: 205px; 
+    max-height: 205px;
+  }
+}
