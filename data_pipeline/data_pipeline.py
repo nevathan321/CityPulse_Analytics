@@ -141,7 +141,7 @@ class Toronto311Pipeline:
         
        
         self.model = RandomForestClassifier(
-            n_estimators=100,
+            n_estimators=200,
             max_depth=15,
             min_samples_split=10,
             min_samples_leaf=5,
@@ -177,3 +177,59 @@ class Toronto311Pipeline:
             "features": feature_importance['feature'].tolist(),
             "importance": [round(imp, 4) for imp in feature_importance['importance'].tolist()]
         }
+    
+    def save_outputs(self):
+        processed_dir = Path("../data/processed")
+        processed_dir.mkdir(parents=True, exist_ok=True)
+        
+       
+        chart_data = self.generate_chart_data()
+        
+        
+        feature_importance = self.train_ml_model()
+        
+       
+        dashboard_data = {
+            "generated_at": datetime.now().isoformat(),
+            "total_records": int(len(self.df)),  
+            "date_range": {
+                "start": self.df['Creation Date'].min().isoformat(),
+                "end": self.df['Creation Date'].max().isoformat()
+            },
+            **chart_data,
+            "feature_importance": feature_importance,
+            "categorical_values": self.categorical_values
+        }
+        
+       
+        insights_path = processed_dir / "insights.json"
+        with open(insights_path, 'w') as f:
+            json.dump(dashboard_data, f, indent=2)
+        print(f" Saved chart data to {insights_path}")
+        
+       
+        model_data = {
+            'model': self.model,
+            'feature_columns': self.feature_columns,
+            'categorical_values': self.categorical_values
+        }
+        
+        model_path = processed_dir / "model.joblib"
+        joblib.dump(model_data, model_path)
+        print(f"Saved ML model to {model_path}")
+        
+    def run_pipeline(self):
+        try:
+            self.load_and_clean_data()
+            self.save_outputs()
+            print("\n Pipeline completed successfully! and Ready to start Flask backend!")  
+        except Exception as e:
+            print(f" Pipeline failed: {str(e)}")
+            raise
+
+def main():
+    pipeline = Toronto311Pipeline()
+    pipeline.run_pipeline()
+
+if __name__ == "__main__":
+    main()
