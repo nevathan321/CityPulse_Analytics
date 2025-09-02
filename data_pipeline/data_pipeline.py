@@ -11,7 +11,7 @@ import os
 from pathlib import Path
 
 class Toronto311Pipeline:
-    def __init__(self, csv_path="../data/SR2025.csv"):
+    def __init__(self, csv_path="data/SR2025.csv"):
         self.csv_path = csv_path
         self.df = None
         self.model = None
